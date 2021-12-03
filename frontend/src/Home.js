@@ -13,7 +13,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Home(props) {
-    const [tweets, setTweets] = React.useState(localStorage.getItem("tweets") == null ? [] : localStorage.getItem("tweets"));
+    const [tweets, setTweets] = React.useState(localStorage.getItem("tweets") == null ? [] : JSON.parse(localStorage.getItem("tweets")));
     const [draftTweetLength, setDraftTweetLength] = React.useState(0);
     const [draftTweet, setDraftTweet] = React.useState("");
     const [loading, setLoading] = React.useState(false);
@@ -45,8 +45,8 @@ export default function Home(props) {
             headers: {"Authorization": `Bearer ${props.cookies.get("kid")}`}
         }).then(response => response.json())
             .then(data => {
-                    localStorage.setItem("tweets")
-                    setTweets(data);
+                localStorage.setItem("tweets", JSON.stringify(data))
+                setTweets(data);
                 }
             )
     }
